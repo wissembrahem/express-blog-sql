@@ -18,13 +18,23 @@ function index (req, res) {
 })}
 
 
-
-
-
-
-
 /* show */
 function show (req, res) {
+    const id = req.params.id
+    const query = "SELECT * FROM posts WHERE id = ?"
+    connection.query(query ,[id], (err, result) => {
+        if (err) {
+          res.status(500)
+            return res.json (err)
+        } if (result.length === 0) {
+             res.status(404)
+            return res.json ({
+                error: "RISORSA NON TROVATA"
+            })
+        } res.json ({
+            result: result
+        })
+    })
   
 }
 
